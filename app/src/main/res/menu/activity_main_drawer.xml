@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="Lab first">
+        <menu>
+            <item
+                android:id="@+id/lab1_task1"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Task - 1" />
+            <item
+                android:id="@+id/lab1_task2"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Task - 2" />
+            <item
+                android:id="@+id/lab1_task3"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Task - 3" />
+        </menu>
+    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Lab2"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Laboratory work second" />
+        <item
+            android:id="@+id/Lab3"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Laboratory work third" />
+        <item
+            android:id="@+id/Lab4"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Laboratory work fourth" />
+        <item
+            android:id="@+id/Lab5"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Laboratory work fifth" />
+    </group>
+
+
+
+</menu>
