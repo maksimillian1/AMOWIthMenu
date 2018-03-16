@@ -7,10 +7,7 @@
     tools:context="com.example.paimon.stillnotdone.MainActivity">
 
 
-    <include
-        layout="@layout/content_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
 
 
     <android.support.design.widget.AppBarLayout
@@ -33,6 +30,11 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/kekkek"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/fragment_start_default"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

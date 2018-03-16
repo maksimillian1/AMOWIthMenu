@@ -2,11 +2,8 @@ package com.example.paimon.stillnotdone;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,17 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.paimon.stillnotdone.LaboratoryWork1.FirstItemFragment;
-import com.example.paimon.stillnotdone.LaboratoryWork1.FirstItemMenuActivity;
-import com.example.paimon.stillnotdone.LaboratoryWork1.SecondItemMenuActivity;
-import com.example.paimon.stillnotdone.LaboratoryWork1.ThirdItemMenuActivity;
-import com.example.paimon.stillnotdone.LaboratoryWork2.Lab2MainActivity;
+import com.example.paimon.stillnotdone.LaboratoryWork1.SecondItemFragment;
+import com.example.paimon.stillnotdone.LaboratoryWork1.ThirdItemFragment;
+import com.example.paimon.stillnotdone.LaboratoryWork2.FragmentLaboratoryWorkSecond;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +41,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+    }
+    public void headerImageOnClick(View view){
+        Fragment fragment = new FragmentStartDefault();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.kekkek, fragment).commit();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
@@ -84,26 +91,37 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         int id = item.getItemId();
 
-        if (id == R.id.lab1_task1) {
-            fragment = new FirstItemFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.kekkek, fragment).commit();
-        } else if (id == R.id.lab1_task2) {
-            intent = new Intent(getApplicationContext(), SecondItemMenuActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.lab1_task3) {
-            intent = new Intent(getApplicationContext(), ThirdItemMenuActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.Lab2) {
-            intent = new Intent(getApplicationContext(), Lab2MainActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.Lab3) {
-
-        } else if (id == R.id.Lab4) {
-
-        }  else if (id == R.id.Lab5) {
-
+        switch (id){
+            case R.id.lab1_task1:
+                fragment = new FirstItemFragment();
+                break;
+            case R.id.lab1_task2:
+                fragment = new SecondItemFragment();
+                break;
+            case R.id.lab1_task3:
+                fragment = new ThirdItemFragment();
+                break;
+            case R.id.lab2:
+                fragment = new FragmentLaboratoryWorkSecond();
+                break;
+            case R.id.lab3:
+                fragment = new FragmentStartDefault();
+                Toast.makeText(getApplicationContext(), "Wooops, this fragment in the pipeline!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.lab4:
+                fragment = new FragmentStartDefault();
+                Toast.makeText(getApplicationContext(), "Wooops, this fragment in the pipeline!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.lab5:
+                fragment = new FragmentStartDefault();
+                Toast.makeText(getApplicationContext(), "Wooops, this fragment in the pipeline!", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                fragment = new FragmentStartDefault();
+                break;
         }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.kekkek, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

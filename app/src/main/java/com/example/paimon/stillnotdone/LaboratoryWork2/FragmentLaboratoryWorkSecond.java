@@ -1,9 +1,12 @@
 package com.example.paimon.stillnotdone.LaboratoryWork2;
 
-import android.app.Activity;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,39 +16,111 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.Random;
 
-
-public class Lab2MainActivity extends Activity{
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentLaboratoryWorkSecond extends Fragment {
     TextView listOfNum;
     EditText newNum;
     TextView forAllSpeeds;
+    Button clearField;
+    Button startSorting;
+    Button addToField;
     private int[] list = {};
 
 
+
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.lab2_layout);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_laboratory_work_second, container, false);
         int[] lengths = {1000,2000,3000,4000,5000,6000,7000,8000,9000,10000};
         long[] sortSpeeds = new long[10];
         for (int i = 0; i <lengths.length ; i++) {
             sortSpeeds[i] = speedTest(lengths[i]);
         }
 
-        forAllSpeeds = findViewById(R.id.textViewForAllSpeeds);
+        forAllSpeeds = view.findViewById(R.id.textViewForAllSpeeds);
         String speeds = "";
         for (int i = 0; i <10 ; i++) {
             speeds+=i+1+" Speed - "+sortSpeeds[i]+"\n";
         }
         forAllSpeeds.setText(speeds);
-        listOfNum = findViewById(R.id.listOfNum);
-        newNum = findViewById(R.id.editTextGet);
+        listOfNum = view.findViewById(R.id.listOfNum);
+        newNum = view.findViewById(R.id.editTextGet);
         listOfNum.setText(fromListToString(list));
-        GraphView graph =  findViewById(R.id.graph);
+        clearField = view.findViewById(R.id.clearField);
+        startSorting = view.findViewById(R.id.sort);
+        addToField = view.findViewById(R.id.addNumber);
+        GraphView graph =  view.findViewById(R.id.graph);
         initGraph(graph, sortSpeeds);
 
 
+        startSorting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int[] arr = fromStrToList(listOfNum.getText().toString());
+                int temp, j;
+                for(int i = 0; i < arr.length - 1; i++){
+                    if (arr[i] > arr[i + 1]) {
+                        temp = arr[i + 1];
+                        arr[i + 1] = arr[i];
+                        j = i;
+                        while (j > 0 && temp < arr[j - 1]) {
+                            arr[j] = arr[j - 1];
+                            j--;
+                        }
+                        arr[j] = temp;
+                    }
+                }
+                listOfNum.setText(fromListToString(arr));
+            }
+        });
+
+
+        clearField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listOfNum.setText("");
+            }
+        });
+
+
+        addToField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(newNum.getText().toString().isEmpty()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Field is empty!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    int[] oldList = fromStrToList(listOfNum.getText().toString());
+                    int[] newList = new int[oldList.length+1];
+                    int newNumber = Integer.parseInt(newNum.getText().toString());
+                    if(oldList.length == 0){
+                        listOfNum.setText(""+newNumber);
+                    }
+                    else{
+                        for (int i = 0; i <newList.length ; i++) {
+                            if(i==oldList.length) {
+                                newList[i] = newNumber;
+                            }
+                            else{
+                                newList[i] = oldList[i];
+                            }
+                        }
+                        listOfNum.setText(fromListToString(newList));
+                    }
+                }
+                newNum.setText("");
+            }
+        });
+
+
+        return view;
     }
 
     public void initGraph(GraphView graph, long[] sortSpeeds){
@@ -76,31 +151,6 @@ public class Lab2MainActivity extends Activity{
 
     }
 
-    public void addNumToList(View view){
-        if(newNum.getText().toString().isEmpty()){
-            Toast.makeText(getApplicationContext(), "Field is empty!", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            int[] oldList = fromStrToList(listOfNum.getText().toString());
-            int[] newList = new int[oldList.length+1];
-            int newNumber = Integer.parseInt(newNum.getText().toString());
-            if(oldList.length == 0){
-                listOfNum.setText(""+newNumber);
-            }
-            else{
-                for (int i = 0; i <newList.length ; i++) {
-                    if(i==oldList.length) {
-                        newList[i] = newNumber;
-                    }
-                    else{
-                        newList[i] = oldList[i];
-                    }
-                }
-                listOfNum.setText(fromListToString(newList));
-            }
-        }
-        newNum.setText("");
-    }
 
     public static String fromListToString(int[] list){
         String sb = "";
@@ -154,27 +204,6 @@ public class Lab2MainActivity extends Activity{
         return yourArray;
     }
 
-    public void clearArrayField(View view){
-        listOfNum.setText("");
-    }
-
-    public void insertSort(View view) {
-        int[] arr = fromStrToList(listOfNum.getText().toString());
-        int temp, j;
-        for(int i = 0; i < arr.length - 1; i++){
-            if (arr[i] > arr[i + 1]) {
-                temp = arr[i + 1];
-                arr[i + 1] = arr[i];
-                j = i;
-                while (j > 0 && temp < arr[j - 1]) {
-                    arr[j] = arr[j - 1];
-                    j--;
-                }
-                arr[j] = temp;
-            }
-        }
-        listOfNum.setText(fromListToString(arr));
-    }
 
 
     public int[] insertSortForGraph(int[] notSortedArray) {
@@ -193,4 +222,5 @@ public class Lab2MainActivity extends Activity{
         }
         return notSortedArray;
     }
+
 }
