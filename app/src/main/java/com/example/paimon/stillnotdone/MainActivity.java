@@ -1,6 +1,5 @@
 package com.example.paimon.stillnotdone;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +18,7 @@ import com.example.paimon.stillnotdone.LaboratoryWork1.FirstItemFragment;
 import com.example.paimon.stillnotdone.LaboratoryWork1.SecondItemFragment;
 import com.example.paimon.stillnotdone.LaboratoryWork1.ThirdItemFragment;
 import com.example.paimon.stillnotdone.LaboratoryWork2.FragmentLaboratoryWorkSecond;
+import com.example.paimon.stillnotdone.LaboratoryWork3.FragmentLaboratoryWorkThird;
 
 
 public class MainActivity extends AppCompatActivity
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Intent intent;
         Fragment fragment;
         int id = item.getItemId();
 
@@ -105,8 +104,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new FragmentLaboratoryWorkSecond();
                 break;
             case R.id.lab3:
-                fragment = new FragmentStartDefault();
-                Toast.makeText(getApplicationContext(), "Wooops, this fragment in the pipeline!", Toast.LENGTH_SHORT).show();
+                fragment = new FragmentLaboratoryWorkThird();
                 break;
             case R.id.lab4:
                 fragment = new FragmentStartDefault();
